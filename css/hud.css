@@ -1,0 +1,31 @@
+/* In-game HUD, touch controls and the jumpscare screen. */
+/* HUD */
+#hud{position:absolute;inset:0;pointer-events:none}
+.hudtop{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:12px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px));font-size:clamp(14px,2vw,20px);letter-spacing:.06em;text-shadow:0 0 3px #000,1px 1px 0 #000}
+.hudtop b{font-weight:400;color:var(--eye)}
+.hudR{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+#battery{display:flex;align-items:center;gap:6px;font-size:13px}
+#battery i{display:block;width:70px;height:10px;border:1px solid var(--fg);padding:1px}
+#battery i::after{content:"";display:block;height:100%;width:var(--lvl,100%);background:var(--bat,var(--ok))}
+.cross{position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px 0 0 -2px;background:rgba(255,255,255,.6)}
+#prompt{position:absolute;left:50%;top:58%;transform:translateX(-50%);font-size:clamp(13px,2vw,18px);color:var(--eye);text-shadow:1px 1px 0 #000;white-space:nowrap}
+#sub{position:absolute;left:8%;right:8%;bottom:10%;text-align:center;font-size:clamp(14px,2.3vw,22px);color:#fff;text-shadow:0 0 3px #000,1px 1px 0 #000,-1px -1px 0 #000;min-height:1.4em;line-height:1.35}
+#toast{position:absolute;left:50%;top:22%;transform:translateX(-50%);font-size:clamp(14px,2vw,18px);color:var(--eye);text-shadow:1px 1px 0 #000;white-space:nowrap}
+#pauseBtn{pointer-events:auto;position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.45);border:1px solid var(--line);color:var(--fg);font-size:15px;padding:4px 14px;letter-spacing:.1em}
+
+/* touch */
+#touch{position:absolute;inset:0}
+#lookpad{position:absolute;top:0;right:0;bottom:0;width:58%}
+#stick{position:absolute;left:max(4%, env(safe-area-inset-left, 0px));bottom:7%;width:min(24vmin,140px);aspect-ratio:1;max-width:100%;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.05)}
+#knob{position:absolute;left:50%;top:50%;width:40%;height:40%;margin:-20% 0 0 -20%;border-radius:50%;background:rgba(255,255,255,.22)}
+#grab{position:absolute;right:max(4%, env(safe-area-inset-right, 0px));bottom:9%;font-size:17px;padding:14px 18px;background:rgba(0,0,0,.55);color:var(--eye);border:1px solid var(--eye);letter-spacing:.08em}
+
+/* jumpscare */
+#scare{position:absolute;inset:0;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.face{position:relative;width:min(70vmin,520px);height:min(90vmin,680px);background:radial-gradient(ellipse at 50% 30%, #1a1414 0%, #050404 55%, #000 70%);border-radius:45% 45% 30% 30%;animation:lunge .5s steps(4) forwards, shake .08s steps(2) infinite}
+.face::before,.face::after{content:"";position:absolute;top:30%;width:14%;height:6%;background:#ff2a1a;border-radius:50%;box-shadow:0 0 30px 10px rgba(255,40,20,.6)}
+.face::before{left:24%}.face::after{right:24%}
+.mouth{position:absolute;left:30%;right:30%;top:56%;height:26%;background:#000;border-radius:40% 40% 50% 50%;box-shadow:inset 0 0 20px #2a0000}
+@keyframes lunge{from{transform:scale(.3)}to{transform:scale(1.25)}}
+@keyframes shake{0%{translate:-6px 3px}100%{translate:6px -3px}}
+@media (prefers-reduced-motion: reduce){.face{animation:none;transform:scale(1)}.item::before{transition:none}}

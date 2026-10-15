@@ -1,0 +1,60 @@
+/* Main menu, mode select, how to play, settings, pause, results and the Kanlungan shop. */
+/* main menu */
+#menu{display:flex;flex-direction:column;justify-content:flex-end;gap:clamp(14px,3vh,28px)}
+.logo{margin:0;font-weight:400;font-size:clamp(40px,9vw,96px);line-height:.95;letter-spacing:.06em;text-wrap:balance}
+.logo span{color:var(--eye)}
+.tagline{margin:6px 0 0;color:var(--dim);font-size:clamp(13px,1.8vw,17px);letter-spacing:.06em}
+.list{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.item{background:none;border:0;color:var(--fg);font-size:clamp(18px,2.6vw,26px);letter-spacing:.12em;padding:6px 0 6px 26px;cursor:pointer;position:relative;text-align:left}
+.item::before{content:"";position:absolute;left:4px;top:50%;width:10px;height:10px;margin-top:-5px;background:var(--eye);transform:scale(0);transition:transform .12s}
+.item:hover,.item:focus-visible{color:var(--eye);outline:none}
+.item:hover::before,.item:focus-visible::before{transform:scale(1)}
+.item small{display:block;font-size:12px;color:var(--dim);letter-spacing:.06em}
+.foot{color:var(--dim);font-size:12px;letter-spacing:.06em}
+
+/* sub screens */
+.sheet{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:18px;min-height:100%;justify-content:center}
+.sheet h2{margin:0;font-weight:400;font-size:clamp(26px,4.5vw,44px);letter-spacing:.1em}
+.sheet p{margin:0;color:var(--dim);max-width:60ch}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.mode{background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--fg);text-align:left;padding:16px 16px 14px;cursor:pointer;display:flex;flex-direction:column;gap:8px;min-width:0}
+.mode:hover,.mode:focus-visible{border-color:var(--eye);outline:none;background:rgba(231,210,106,.06)}
+.mode b{font-weight:400;font-size:22px;letter-spacing:.12em;color:var(--eye)}
+.mode.horror b{color:var(--blood)}
+.mode span{color:var(--dim);font-size:14px;line-height:1.45}
+.mode em{font-style:normal;font-size:12px;letter-spacing:.06em;color:var(--fg);opacity:.8}
+.warn{color:var(--blood)!important}
+.rows{display:flex;flex-direction:column;gap:14px;max-width:520px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:12px;align-items:center}
+.row label{color:var(--fg);font-size:15px}
+.row input[type=range]{width:100%;accent-color:var(--eye)}
+.row select{font-family:var(--pixel);font-size:15px;background:#0d0f16;color:var(--fg);border:1px solid var(--line);padding:6px 8px}
+.row input[type=checkbox]{width:20px;height:20px;accent-color:var(--eye);justify-self:start}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{background:transparent;color:var(--eye);border:1px solid var(--eye);padding:10px 18px;font-size:16px;letter-spacing:.1em;cursor:pointer}
+.btn:hover,.btn:focus-visible{background:var(--eye);color:var(--bg);outline:none}
+.btn.ghost{color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover,.btn.ghost:focus-visible{background:var(--fg);color:var(--bg)}
+.btn.danger{color:var(--blood);border-color:var(--blood)}
+.btn.danger:hover,.btn.danger:focus-visible{background:var(--blood);color:#fff}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.how div{border:1px solid var(--line);padding:14px 16px;min-width:0}
+.how h3{margin:0 0 6px;font-weight:400;color:var(--eye);font-size:17px;letter-spacing:.08em}
+.how ul{margin:0;padding-left:18px;color:var(--dim);font-size:14px}
+kbd{font-family:var(--pixel);border:1px solid var(--line);padding:0 5px;color:var(--fg)}
+
+
+/* shelter shop */
+#shelter{display:flex;justify-content:flex-start}
+.shop{width:min(480px,100%);display:flex;flex-direction:column;gap:14px}
+.shop h2{margin:0;font-weight:400;font-size:clamp(22px,3vw,32px);letter-spacing:.1em}
+.coins{font-size:20px;color:var(--eye)}
+.sum{color:var(--dim);font-size:14px;margin:0}
+.up{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;border-top:1px solid var(--line);padding-top:10px}
+.up b{font-weight:400;font-size:16px}
+.up span{grid-column:1;color:var(--dim);font-size:13px}
+.up .lv{color:var(--eye);font-size:12px;letter-spacing:.1em}
+.up button{grid-row:1 / span 3;grid-column:2;min-width:84px}
+.up button:disabled{opacity:.35;cursor:default;background:transparent;color:var(--fg);border-color:var(--line)}
+.roster{display:flex;flex-wrap:wrap;gap:6px;max-height:110px;overflow-y:auto}
+.roster span{border:1px solid var(--line);padding:2px 8px;font-size:13px;color:var(--fg)}
