@@ -1,0 +1,20 @@
+{
+  "name": "pusa-rescue",
+  "version": "1.1.0",
+  "private": true,
+  "description": "A first-person, PS1-style night game: rescue stray cats in a rainy Filipino barangay.",
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes serve .",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "eslint": "9.39.5",
+    "globals": "16.5.0",
+    "prettier": "3.6.2"
+  }
+}
