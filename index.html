@@ -898,14 +898,29 @@ function refreshRoster(show) {
 }
 
 // ====================== AUDIO ======================
-let AC = null, master = null;
+let AC = null, master = null, silentEl = null;
+function silentWav() {
+  const n = 800, b = new Uint8Array(44 + n), v = new DataView(b.buffer), w = (o, str) => { for (let i = 0; i < str.length; i++) b[o + i] = str.charCodeAt(i); };
+  w(0, 'RIFF'); v.setUint32(4, 36 + n, true); w(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, 'data'); v.setUint32(40, n, true);
+  b.fill(128, 44); let s = ''; b.forEach(x => { s += String.fromCharCode(x); }); return 'data:audio/wav;base64,' + btoa(s);
+}
 function audioOn() {
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+  try {
+    if (!silentEl) { silentEl = new Audio(silentWav()); silentEl.loop = true; silentEl.setAttribute('playsinline', ''); }
+    const pr = silentEl.play(); if (pr && pr.catch) pr.catch(() => {});
+  } catch (e) {}
   try {
     if (!AC) { AC = new (window.AudioContext || window.webkitAudioContext)(); master = AC.createGain(); master.connect(AC.destination); }
-    master.gain.value = settings.vol;
+    master.gain.value = settings.vol * 1.4;
     if (AC.state === 'suspended') AC.resume();
+    rainSound();
   } catch (e) { AC = null; }
 }
+const unlock = () => { audioOn(); if (AC && AC.state === 'running') { removeEventListener('pointerdown', unlock, true); removeEventListener('keydown', unlock, true); } };
+addEventListener('pointerdown', unlock, true); addEventListener('keydown', unlock, true);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && AC && AC.state !== 'running') AC.resume(); });
 function meow(vol, pan = 0, pitch = 1) {
   if (!AC) return;
   const t = AC.currentTime, o = AC.createOscillator(), f = AC.createBiquadFilter(), g = AC.createGain();
@@ -924,7 +939,8 @@ function tone(freq, start, dur, vol, type = 'sine') {
   g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
   o.connect(g).connect(master); o.start(t); o.stop(t + dur + 0.02);
 }
-function chirp() { for (let i = 0; i < 3; i++) tone(rnd(4100, 4500), i * 0.07, 0.05, 0.012); }
+function chirp() { for (let i = 0; i < 3; i++) tone(rnd(4100, 4500), i * 0.07, 0.05, 0.03); }
+function tick() { tone(660, 0, 0.06, 0.05, 'triangle'); }
 function chime() { tone(988, 0, 0.18, 0.08); tone(1319, 0.09, 0.3, 0.08); }
 function thud() {
   if (!AC) return;
@@ -952,7 +968,7 @@ function rainSound() {
   if (!AC || rainNode) return; makeNoise();
   const s = AC.createBufferSource(); s.buffer = noiseBuf; s.loop = true;
   const f = AC.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 2400; f.Q.value = 0.5;
-  const g = AC.createGain(); g.gain.value = 0.035;
+  const g = AC.createGain(); g.gain.value = 0.09;
   s.connect(f).connect(g).connect(master); s.start(); rainNode = s;
 }
 function thunder() {
@@ -978,7 +994,7 @@ function scream() {
 const $ = (id) => document.getElementById(id);
 const screens = ['menu', 'modes', 'how', 'settings', 'pause', 'result', 'shelter'];
 let backTo = 'menu';
-function show(id) { screens.forEach(s => { $(s).hidden = s !== id; }); const f = id && $(id).querySelector('button'); if (f && !isTouch) f.focus({ preventScroll: true }); }
+function show(id) { if (id) tick(); screens.forEach(s => { $(s).hidden = s !== id; }); const f = id && $(id).querySelector('button'); if (f && !isTouch) f.focus({ preventScroll: true }); }
 const subEl = $('sub'), promptEl = $('prompt'), toastEl = $('toast');
 let subQueue = [], subTimer = 0, toastTimer = 0;
 function say(lines) { subQueue.push(...lines); if (subTimer <= 0) nextSub(); }
@@ -1272,7 +1288,7 @@ function update(dt, t) {
       const c = hidden[0], d = c.group.position.distanceTo(camera.position);
       const rel = c.group.position.clone().sub(camera.position).normalize();
       const right = new THREE.Vector3(Math.cos(player.yaw), 0, -Math.sin(player.yaw));
-      meow(Math.max(0.01, 0.3 * (1 - d / 30)), Math.max(-1, Math.min(1, rel.dot(right))), rnd(0.9, 1.15));
+      meow(Math.max(0.03, 0.45 * (1 - d / 30)), Math.max(-1, Math.min(1, rel.dot(right))), rnd(0.9, 1.15));
       if (d < 6 && Math.random() < 0.6) say(['...meow?']);
       else if (Math.random() < 0.2) say([`Lola: Baka ${c.spot.where}...`]);
     }
@@ -1421,7 +1437,7 @@ function atmos(dt, t) {
   const on = boltT > 0 && (boltT > 0.3 || boltT < 0.14);
   hemi.intensity = hemiBase + (on ? 2.4 : 0);
   post.uniforms.bolt.value = on ? 1 : 0;
-  if (thunderIn > 0) { thunderIn -= dt; if (thunderIn <= 0 && (state === 'play' || state === 'shelter')) thunder(); }
+  if (thunderIn > 0) { thunderIn -= dt; if (thunderIn <= 0) thunder(); }
   if (toastTimer > 0) { toastTimer -= dt; if (toastTimer <= 0) toastEl.hidden = true; }
   post.uniforms.time.value = t;
 }
@@ -1458,7 +1474,7 @@ function openSettings() {
 }
 function saveSettings() { store.set('pr-settings', settings); }
 $('sSens').addEventListener('input', e => { settings.sens = +e.target.value; saveSettings(); });
-$('sVol').addEventListener('input', e => { settings.vol = +e.target.value; if (master) master.gain.value = settings.vol; saveSettings(); });
+$('sVol').addEventListener('input', e => { settings.vol = +e.target.value; if (master) master.gain.value = settings.vol * 1.4; saveSettings(); });
 $('sQual').addEventListener('change', e => { settings.quality = e.target.value; saveSettings(); applyQuality(); });
 $('sInv').addEventListener('change', e => { settings.invert = e.target.checked; saveSettings(); });
 let resetArmed = false;
