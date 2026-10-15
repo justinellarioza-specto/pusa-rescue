@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="css/menus.css">
 <link rel="stylesheet" href="css/hud.css">
 <script type="importmap">
-  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js" } }
+  { "imports": { "three": "./vendor/three.module.js" } }
 </script>
 </head>
 <body>
@@ -31,13 +31,24 @@
     </div>
     <div class="cross"></div>
     <div id="prompt" hidden></div>
-    <div id="toast" hidden></div>
     <div id="sub"></div>
     <div id="touch" hidden>
       <div id="lookpad"></div>
       <div id="stick"><div id="knob"></div></div>
       <button id="grab" type="button">KUNIN</button>
       <button id="pauseBtn" type="button" aria-label="Pause">II</button>
+    </div>
+  </div>
+
+  <div id="toast" hidden></div>
+  <div id="debug" hidden aria-hidden="true"></div>
+
+  <!-- photo mode -->
+  <div id="photoBar" hidden>
+    <span class="photoHint">PHOTO MODE · <kbd>W A S D</kbd> lipad · <kbd>R</kbd>/<kbd>F</kbd> taas-baba · <kbd>Enter</kbd> kunan · <kbd>Esc</kbd> bumalik</span>
+    <div class="btns">
+      <button class="btn" id="photoShot" type="button">KUNAN</button>
+      <button class="btn ghost" id="photoExit" type="button">BUMALIK</button>
     </div>
   </div>
 
@@ -65,6 +76,7 @@
         <button class="mode horror" id="modeHorror" type="button"><b>LAGIM</b><span>Mas madilim. Nauubos ang baterya ng flashlight. May sumusunod sa iyo, at gumagalaw lang siya kapag hindi mo siya iniilawan.</span><em class="warn">May jumpscare at malakas na tunog</em></button>
         <button class="mode" id="modeBuild" type="button"><b>KANLUNGAN</b><span>Gabi-gabi, mas maraming pusa. Kumita ng piso, mag-upgrade, at palakihin ang kanlungan. Bawat pusa ay may pangalan.</span><em id="buildStatus">Gabi 1</em></button>
       </div>
+      <div class="row diffRow"><label for="sDiff">Hirap</label><select id="sDiff"><option value="easy">Madali (mas mahabang oras)</option><option value="normal">Normal</option><option value="hard">Mahirap (mas maikling oras)</option></select></div>
       <div class="btns"><button class="btn ghost" data-back type="button">BUMALIK</button></div>
     </div>
   </section>
@@ -76,6 +88,8 @@
       <div class="how">
         <div><h3>Computer</h3><ul><li><kbd>W A S D</kbd> lakad, <kbd>Shift</kbd> takbo</li><li>Mouse para tumingin</li><li><kbd>E</kbd> o click para kunin ang pusa</li><li><kbd>Esc</kbd> o <kbd>P</kbd> para mag-pause</li></ul></div>
         <div><h3>Cellphone</h3><ul><li>Kaliwang bilog para maglakad</li><li>I-drag ang kanang bahagi para tumingin</li><li>KUNIN para kunin ang pusa</li><li>Mas maganda kapag naka-landscape</li></ul></div>
+        <div><h3>Controller</h3><ul><li>Kaliwang stick lakad (pindutin o RT para tumakbo)</li><li>Kanang stick tumingin</li><li><kbd>A</kbd> / <kbd>✕</kbd> kunin ang pusa</li><li><kbd>Start</kbd> pause · <kbd>B</kbd> / <kbd>◯</kbd> bumalik</li></ul></div>
+        <div><h3>Photo mode</h3><ul><li>Sa pause menu, piliin ang PHOTO MODE</li><li>Lumipad gamit ang <kbd>W A S D</kbd>, <kbd>R</kbd> pataas, <kbd>F</kbd> pababa</li><li><kbd>Enter</kbd> para kunan ng larawan</li><li><kbd>F3</kbd> kahit kailan: FPS at posisyon</li></ul></div>
         <div><h3>Mga tip</h3><ul><li>Kumikinang ang mata ng pusa kapag naiilawan.</li><li>Makinig sa ngiyaw; kaliwa o kanan ang tunog.</li><li>Tingnan sa ilalim, sa likod, at sa itaas ng mga bagay.</li><li>Sa LAGIM: huwag mong alisin ang ilaw sa kanya.</li></ul></div>
       </div>
       <div class="btns"><button class="btn ghost" data-back type="button">BUMALIK</button></div>
@@ -91,6 +105,10 @@
         <div class="row"><label for="sVol">Volume</label><input id="sVol" type="range" min="0" max="1" step="0.05"></div>
         <div class="row"><label for="sQual">Graphics</label><select id="sQual"><option value="low">Low (mabilis)</option><option value="med">Medium</option><option value="high">High</option></select></div>
         <div class="row"><label for="sInv">Invert look (Y)</label><input id="sInv" type="checkbox"></div>
+        <div class="row"><label for="sSubs">Subtitles</label><input id="sSubs" type="checkbox"></div>
+        <div class="row"><label for="sCalm">Bawasan ang flash at yanig</label><input id="sCalm" type="checkbox"></div>
+        <div class="row"><label for="sBig">Malaking HUD text</label><input id="sBig" type="checkbox"></div>
+        <div class="row"><label for="sFps">Ipakita ang FPS (F3)</label><input id="sFps" type="checkbox"></div>
       </div>
       <div class="btns">
         <button class="btn ghost" data-back type="button">BUMALIK</button>
@@ -105,6 +123,7 @@
       <h2>NAKA-PAUSE</h2>
       <nav class="list">
         <button class="item" id="pResume" type="button">ITULOY</button>
+        <button class="item" id="pPhoto" type="button">PHOTO MODE</button>
         <button class="item" id="pSet" type="button">SETTINGS</button>
         <button class="item" id="pFull" type="button">FULLSCREEN</button>
         <button class="item" id="pQuit" type="button">BUMALIK SA MENU</button>
@@ -135,6 +154,14 @@
         <p class="sum" id="rosterLabel">Mga alaga</p>
         <div class="roster" id="roster"></div>
       </div>
+      <div id="catCard" class="catCard" hidden>
+        <h3 id="ccName"></h3>
+        <ul id="ccInfo"></ul>
+        <label for="ccInput">Palitan ang pangalan</label>
+        <div class="ccRow"><input id="ccInput" type="text" maxlength="16" autocomplete="off" spellcheck="false"><button class="btn" id="ccSave" type="button">I-SAVE</button></div>
+        <p id="ccErr" class="err" role="alert" hidden></p>
+        <button class="btn ghost" id="ccClose" type="button">ISARA</button>
+      </div>
       <div class="btns">
         <button class="btn" id="shNext" type="button">SUSUNOD NA GABI</button>
         <button class="btn ghost" id="shMenu" type="button">MENU</button>
@@ -142,9 +169,16 @@
     </div>
   </section>
 
+  <div id="loading" role="status">
+    <div class="walker" aria-hidden="true"><i></i></div>
+    <p id="loadMsg">Naglo-load...</p>
+    <noscript><p>Kailangan naka-on ang JavaScript para malaro ito.</p></noscript>
+  </div>
+
   <div id="scare" hidden><div class="face"><div class="mouth"></div></div></div>
 </div>
 
+<script src="js/boot.js"></script>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

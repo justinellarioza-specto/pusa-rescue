@@ -1,10 +1,34 @@
 // Everything saved in the player's browser: settings, Kanlungan progress and best times.
 export const store = {
-  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
-  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  get(k, d) {
+    try {
+      const v = localStorage.getItem(k);
+      return v ? JSON.parse(v) : d;
+    } catch (e) {
+      return d;
+    }
+  },
+  set(k, v) {
+    try {
+      localStorage.setItem(k, JSON.stringify(v));
+    } catch (e) {}
+  },
 };
 
-export const settings = Object.assign({ sens: 1, vol: 0.8, quality: 'med', invert: false }, store.get('pr-settings', {}));
+export const settings = Object.assign(
+  {
+    sens: 1,
+    vol: 0.8,
+    quality: 'med',
+    invert: false,
+    diff: 'normal',
+    subs: true,
+    calm: false,
+    bigHud: false,
+    fps: false,
+  },
+  store.get('pr-settings', {}),
+);
 export const saveSettings = () => store.set('pr-settings', settings);
 
 const SAVE0 = { night: 1, coins: 0, cats: [], up: { flash: 0, shoes: 0, time: 0, bowls: 0, home: 0 } };
@@ -21,5 +45,6 @@ export const writeBest = () => store.set('pr-best', best);
 export function resetProgress() {
   Object.assign(save, freshSave());
   best.classic = null;
-  writeSave(); writeBest();
+  writeSave();
+  writeBest();
 }
