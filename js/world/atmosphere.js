@@ -22,6 +22,7 @@ import {
   mothSeed,
 } from './street.js';
 import { rosterMeshes } from './cats.js';
+import { updateDetails } from './details.js';
 
 // ---------- weather ----------
 let weather = WEATHER.ulan,
@@ -182,5 +183,6 @@ export function atmos(dt, t) {
     thunderIn -= dt;
     if (thunderIn <= 0) thunder();
   }
+  updateDetails(dt, t, weather, on && !settings.calm);
   post.uniforms.time.value = t;
 }

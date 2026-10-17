@@ -57,6 +57,7 @@ const post = new THREE.ShaderMaterial({
     res: { value: new THREE.Vector2(RES_W, RES_H) },
     bolt: { value: 0 },
     fear: { value: 0 },
+    glow: { value: 0.9 },
   },
   vertexShader: postVert,
   fragmentShader: postFrag,

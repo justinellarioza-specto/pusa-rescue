@@ -90,6 +90,8 @@ const sillM = mat({ color: 0x8a857a });
 const grillM = mat({ map: T.grill, transparent: true, alphaTest: 0.5, side: THREE.DoubleSide });
 const tankM = mat({ color: 0x2a5fa0, specular: 0x222222, shininess: 20 });
 const metalM = mat({ color: 0x55575c });
+const litWindows = []; // lit windows, used by world/details.js for glow, light spill and TV flicker
+const eaves = []; // front roof edges, used by world/details.js for Christmas lights
 function house(side, z, opts = {}) {
   const h = opts.h || rnd(3.2, 5.4),
     col = opts.col || pick(houseCols);
@@ -100,10 +102,15 @@ function house(side, z, opts = {}) {
   const roof = box(6.8, 0.22, 8.2, mat({ map: T.yero }), side * 11.9, h + 0.1, cz, false);
   roof.rotation.z = side * 0.06;
   box(0.08, 0.3, 8.2, mat({ color: 0x3e3a34 }), side * 8.55, h - 0.02, cz, false);
+  eaves.push({ side, z, h, front: !opts.noFront });
   if (opts.noFront) return h;
   [z - 1.9, z - 5.7].forEach((wz) => {
-    plane(1.3, 1.1, pick(Math.random() < 0.45 ? winMats.lit : winMats.dark), fx - side * 0.02, 1.75, wz, ry);
+    const lit = Math.random() < 0.45;
+    const tv = lit && Math.random() < 0.3;
+    const m = tv ? pick(winMats.lit).clone() : pick(lit ? winMats.lit : winMats.dark);
+    plane(1.3, 1.1, m, fx - side * 0.02, 1.75, wz, ry);
     box(0.16, 0.08, 1.45, sillM, fx - side * 0.08, 1.16, wz, false);
+    if (lit) litWindows.push({ x: fx - side * 0.02, y: 1.75, z: wz, side, mat: tv ? m : null });
   });
   plane(1.0, 2.0, doorM, fx - side * 0.02, 1.0, z - 3.8, ry);
   box(0.12, 0.3, 0.22, metalM, fx - side * 0.06, 1.95, z - 4.6, false);
@@ -115,7 +122,9 @@ function house(side, z, opts = {}) {
     box(0.9, 0.12, 3.4, mat({ color: 0x7a766c }), fx - side * 0.45, 2.75, z - 3.8, false);
     plane(3.4, 0.9, grillM, fx - side * 0.88, 3.25, z - 3.8, ry);
     box(0.06, 0.06, 3.4, metalM, fx - side * 0.88, 3.72, z - 3.8, false);
-    plane(1.3, 1.0, pick(Math.random() < 0.5 ? winMats.lit : winMats.dark), fx - side * 0.02, 3.4, z - 3.0, ry);
+    const upLit = Math.random() < 0.5;
+    plane(1.3, 1.0, pick(upLit ? winMats.lit : winMats.dark), fx - side * 0.02, 3.4, z - 3.0, ry);
+    if (upLit) litWindows.push({ x: fx - side * 0.02, y: 3.4, z: z - 3.0, side, mat: null, upper: true });
   }
   if (Math.random() < 0.4) cyl(0.5, 0.5, 0.9, 10, tankM, side * rnd(11, 13), h + 0.65, cz + rnd(-2, 2), false);
   if (Math.random() < 0.5) {
@@ -512,6 +521,11 @@ const mothSeed = Array.from({ length: MOTHS }, () => ({
 }));
 
 export {
+  litWindows,
+  eaves,
+  lantern,
+  metalM,
+  grillM,
   PUDDLES,
   posts,
   storeGlow,

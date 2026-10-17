@@ -27,6 +27,7 @@ import { cats, hitboxes, refreshRoster } from './world/cats.js';
 import { applyShelterLook } from './world/shelter.js';
 import { figure, batteries } from './world/lagim.js';
 import { setWeather, spawnRipple } from './world/atmosphere.js';
+import { updateViewmodel, showViewmodel } from './engine/viewmodel.js';
 
 const touchUI = $('touch'),
   promptEl = $('prompt');
@@ -249,6 +250,7 @@ function update(dt, t) {
   mx += stick.x + pad.x;
   mz += stick.y + pad.y;
   const len = Math.hypot(mx, mz);
+  let moving = 0;
   if (len > 0.05) {
     if (len > 1) {
       mx /= len;
@@ -256,6 +258,7 @@ function update(dt, t) {
     }
     const running = keys.ShiftLeft || keys.ShiftRight || pad.run || Math.hypot(stick.x, stick.y) > 0.95;
     const sp = (running ? RUN : WALK) * speedMul * Math.min(1, len);
+    moving = Math.min(1, len) * (running ? 1.35 : 1);
     const s = Math.sin(player.yaw),
       co = Math.cos(player.yaw);
     const dx = (mx * co + mz * s) * sp * dt,
@@ -296,6 +299,7 @@ function update(dt, t) {
   }
   flash.intensity = (Math.random() < 0.012 && !settings.calm ? 0.25 : 1) * flashBase * power;
   camera.getWorldDirection(fwd);
+  updateViewmodel(dt, moving, player.yaw - lag.yaw, player.pitch - lag.pitch, power);
 
   // aim at a cat or a battery
   ray.setFromCamera(center, camera);
@@ -631,6 +635,7 @@ $('photoShot').addEventListener('click', () => {
 $('photoExit').addEventListener('click', exitPhoto);
 
 export {
+  showViewmodel,
   startGame,
   pauseGame,
   resumeGame,

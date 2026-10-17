@@ -18,6 +18,7 @@ import {
   updatePhoto,
   photoKey,
   takeShotIfRequested,
+  showViewmodel,
 } from './game.js';
 
 initInput({
@@ -71,6 +72,7 @@ function loop() {
     t = clock.elapsedTime,
     state = getState();
   pollGamepad(dt);
+  showViewmodel(state === 'play' || state === 'paused');
   if (state === 'play') update(dt, t);
   else if (state === 'photo') updatePhoto(dt);
   else if (state === 'shelter') {

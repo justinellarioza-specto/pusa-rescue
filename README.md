@@ -28,6 +28,8 @@ A first-person, PS1-style night game set in a rainy Filipino barangay. A storm i
 - **Controller support:** Xbox and PlayStation controllers work in menus and in game
 - **Accessibility:** subtitles on/off, reduce flashing and shaking, bigger HUD text
 - **Loading screen** with a walking pixel cat, and a clear message if a device can't run WebGL
+- **Night-time detail:** glow around lights, wet-road reflections, parols and Christmas lights, drifting clouds, rain splashes, TVs flickering in windows, posters and street clutter
+- **First-person hand** holding the flashlight, swaying as you walk
 
 ## Controls
 
@@ -44,12 +46,13 @@ Tips: cats' eyes shine when your flashlight hits them, and their meows come from
 
 ## Screenshots
 
-|                                                 |                                            |
-| ----------------------------------------------- | ------------------------------------------ |
-| ![Sari-sari store](screenshots/sari-sari.jpg)   | ![Lagim mode](screenshots/lagim.jpg)       |
-| ![Kanlungan shelter](screenshots/kanlungan.jpg) | ![Phone controls](screenshots/phone.jpg)   |
-| ![Clear night](screenshots/clear-night.jpg)     | ![Storm](screenshots/storm.jpg)            |
-| ![Cat card](screenshots/cat-card.jpg)           | ![Loading screen](screenshots/loading.jpg) |
+|                                                               |                                            |
+| ------------------------------------------------------------- | ------------------------------------------ |
+| ![Sari-sari store](screenshots/sari-sari.jpg)                 | ![Lagim mode](screenshots/lagim.jpg)       |
+| ![Kanlungan shelter](screenshots/kanlungan.jpg)               | ![Phone controls](screenshots/phone.jpg)   |
+| ![Clear night](screenshots/clear-night.jpg)                   | ![Storm](screenshots/storm.jpg)            |
+| ![Cat card](screenshots/cat-card.jpg)                         | ![Loading screen](screenshots/loading.jpg) |
+| ![Parols and Christmas lights](screenshots/street-lights.jpg) |                                            |
 
 ## How it's built
 
@@ -89,8 +92,8 @@ pusa-rescue/
 │   │   ├── shop.js         Kanlungan upgrades and prices
 │   │   ├── weather.js      Weather presets
 │   │   └── text.js         All in-game dialogue and messages
-│   ├── engine/             Renderer, materials, textures, quality, shader loader
-│   ├── world/              Street map, cats, shelter, Lagim props, weather and rain
+│   ├── engine/             Renderer, first-person hand, materials, textures, quality, shader loader
+│   ├── world/              Street map, details (lights, reflections, parols), cats, shelter, Lagim props, weather
 │   └── ui/                 Screens and subtitles, menu buttons, shop and cat cards
 ├── tests/                  Unit tests (node:test)
 ├── vendor/                 three.js r128 and its license
