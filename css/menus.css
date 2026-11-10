@@ -3,13 +3,16 @@
 #menu {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  gap: clamp(14px, 3vh, 28px);
+  gap: clamp(10px, 3vh, 28px);
+}
+/* pushes the menu to the bottom; unlike justify-content: flex-end, a short screen scrolls instead of cutting off the logo */
+#menu > :first-child {
+  margin-top: auto;
 }
 .logo {
   margin: 0;
   font-weight: 400;
-  font-size: clamp(40px, 9vw, 96px);
+  font-size: clamp(34px, min(9vw, 15vh), 96px);
   line-height: 0.95;
   letter-spacing: 0.06em;
   text-wrap: balance;
@@ -389,4 +392,18 @@ kbd {
 }
 .catCard .btn.ghost {
   align-self: flex-start;
+}
+
+/* short screens (phones in landscape): tighten the main menu so it fits without scrolling */
+@media (max-height: 460px) {
+  #menu {
+    gap: 8px;
+  }
+  #menu .item {
+    padding-block: 3px;
+    font-size: 17px;
+  }
+  .tagline {
+    margin-top: 2px;
+  }
 }

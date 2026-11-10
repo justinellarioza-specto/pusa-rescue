@@ -61,6 +61,10 @@ button {
 }
 .shadeL {
   background: linear-gradient(90deg, rgba(3, 4, 7, 0.92) 0%, rgba(3, 4, 7, 0.6) 45%, rgba(3, 4, 7, 0) 75%);
+  /* left-aligned screens (main menu, pause, shelter) sit in from the edge instead of hugging it */
+  padding-block: clamp(16px, 7vh, 72px);
+  padding-left: max(clamp(28px, 7vw, 112px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(20px, 4vw, 48px), env(safe-area-inset-right, 0px));
 }
 .shadeAll {
   background: rgba(3, 4, 7, 0.82);
@@ -69,4 +73,9 @@ button {
 html,
 body {
   margin: 0;
+}
+@media (max-height: 460px) {
+  .shadeL {
+    padding-block: 12px;
+  }
 }
