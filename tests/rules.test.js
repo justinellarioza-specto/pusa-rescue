@@ -20,17 +20,17 @@ import {
 const freshSave = () => ({ night: 1, coins: 0, cats: [], up: { flash: 0, shoes: 0, time: 0, bowls: 0, home: 0 } });
 const item = { id: 'flash', cost: [40, 90, 150] };
 
-test('Klasik has 8 cats and 5 minutes on Normal', () => {
+test('Classic has 8 cats and 5 minutes on Normal', () => {
   const r = roundSetup('classic', freshSave(), 'normal');
   assert.equal(r.total, 8);
   assert.equal(r.timeLimit, 300);
 });
 
-test('Lagim has 6 cats', () => {
+test('Nightmare has 6 cats', () => {
   assert.equal(roundSetup('horror', freshSave()).total, 6);
 });
 
-test('Kanlungan adds a cat every night, up to 8', () => {
+test('Shelter adds a cat every night, up to 8', () => {
   const s = freshSave();
   assert.equal(roundSetup('build', s).total, 3);
   s.night = 4;
@@ -39,7 +39,7 @@ test('Kanlungan adds a cat every night, up to 8', () => {
   assert.equal(roundSetup('build', s).total, 8);
 });
 
-test('upgrades only count in Kanlungan', () => {
+test('upgrades only count in Shelter mode', () => {
   const s = freshSave();
   s.up.time = 2;
   s.up.shoes = 1;
@@ -119,7 +119,7 @@ test('time and clock labels', () => {
   assert.equal(clockLabel(0, 300), '12:00 AM');
 });
 
-test('weather: Lagim is always rainy or stormy', () => {
+test('weather: Nightmare is always rainy or stormy', () => {
   for (let i = 0; i < 50; i++) assert.ok(['ulan', 'bagyo'].includes(rollWeather('horror')));
   assert.equal(
     rollWeather('classic', () => 0),

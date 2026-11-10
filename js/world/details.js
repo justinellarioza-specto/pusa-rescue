@@ -253,7 +253,7 @@ clouds.renderOrder = -1;
 scene.add(clouds);
 
 // ---------- rain splashes on the ground ----------
-const MAX_SPLASH = QUALITY.high.splash;
+const MAX_SPLASH = Math.max(...Object.values(QUALITY).map((q) => q.splash));
 const splashPos = new Float32Array(MAX_SPLASH * 3);
 const splashLife = new Float32Array(MAX_SPLASH);
 const splashGeo = new THREE.BufferGeometry();
@@ -270,11 +270,11 @@ let splashIdx = 0,
 
 // ---------- posters on walls and posts ----------
 const posters = [
-  ['NAWAWALANG PUSA', 'Si Muning · puti · pulang kwintas', '#f2eee4', '#1f1f1f'],
+  ['LOST CAT', 'Muning · white · red collar', '#f2eee4', '#1f1f1f'],
   ['FOR RENT', 'Room for rent · Inquire inside', '#e8d84a', '#1c1c1c'],
-  ['BAWAL MAGTAPON', 'ng basura dito · Brgy. Maligaya', '#ffffff', '#b3221b'],
-  ['PALUWAGAN', 'Sali na! Kay Aling Nena', '#ff8fb1', '#3a0f1f'],
-  ['MAY TUTA', 'Libre · 3 natira · tanong sa loob', '#bfe3ff', '#0f2a44'],
+  ['NO LITTERING', 'Brgy. Maligaya', '#ffffff', '#b3221b'],
+  ['SAVINGS CLUB', 'Join! Ask Aling Nena', '#ff8fb1', '#3a0f1f'],
+  ['FREE PUPPIES', '3 left · ask inside', '#bfe3ff', '#0f2a44'],
 ];
 const posterMats = posters.map(([a, b, bg, fg]) => mat({ map: signTex(a, b, bg, fg, 64, 80) }));
 eaves.forEach((e, i) => {

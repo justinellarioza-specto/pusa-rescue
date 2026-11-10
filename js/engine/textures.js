@@ -232,44 +232,51 @@ T.grill = tex(
   3,
   1,
 );
+// Textures marked flat (signs, windows) skip bump relief so text and glass stay clean.
+const flat = (t) => {
+  t.isFlat = true;
+  return t;
+};
 function windowTex(lit) {
-  return tex(32, 32, (g, w, h) => {
-    g.fillStyle = '#4f4a40';
-    g.fillRect(0, 0, w, h);
-    if (lit) {
-      const gr = g.createLinearGradient(0, 3, 0, 29);
-      gr.addColorStop(0, '#f2c27a');
-      gr.addColorStop(1, '#a8682a');
-      g.fillStyle = gr;
-      g.fillRect(3, 3, 26, 26);
-      g.fillStyle = pick(['#8a2f3a', '#2f5a8a', '#6a8a2f', '#8a6a2f']);
-      g.fillRect(3, 3, 7, 26);
-      g.fillRect(22, 3, 7, 26);
-      g.fillStyle = 'rgba(0,0,0,.25)';
-      for (let y = 3; y < 29; y += 3) {
-        g.fillRect(4, y, 5, 1);
-        g.fillRect(23, y, 5, 1);
+  return flat(
+    tex(32, 32, (g, w, h) => {
+      g.fillStyle = '#4f4a40';
+      g.fillRect(0, 0, w, h);
+      if (lit) {
+        const gr = g.createLinearGradient(0, 3, 0, 29);
+        gr.addColorStop(0, '#f2c27a');
+        gr.addColorStop(1, '#a8682a');
+        g.fillStyle = gr;
+        g.fillRect(3, 3, 26, 26);
+        g.fillStyle = pick(['#8a2f3a', '#2f5a8a', '#6a8a2f', '#8a6a2f']);
+        g.fillRect(3, 3, 7, 26);
+        g.fillRect(22, 3, 7, 26);
+        g.fillStyle = 'rgba(0,0,0,.25)';
+        for (let y = 3; y < 29; y += 3) {
+          g.fillRect(4, y, 5, 1);
+          g.fillRect(23, y, 5, 1);
+        }
+        if (Math.random() < 0.35) {
+          g.fillStyle = 'rgba(30,18,8,.85)';
+          g.fillRect(13, 12, 6, 17);
+          g.fillRect(14, 8, 4, 4);
+        }
+      } else {
+        g.fillStyle = '#0c0f17';
+        g.fillRect(3, 3, 26, 26);
+        g.fillStyle = '#18202e';
+        g.fillRect(5, 5, 4, 10);
       }
-      if (Math.random() < 0.35) {
-        g.fillStyle = 'rgba(30,18,8,.85)';
-        g.fillRect(13, 12, 6, 17);
-        g.fillRect(14, 8, 4, 4);
-      }
-    } else {
-      g.fillStyle = '#0c0f17';
-      g.fillRect(3, 3, 26, 26);
-      g.fillStyle = '#18202e';
-      g.fillRect(5, 5, 4, 10);
-    }
-    g.fillStyle = '#2a2724';
-    for (let x = 3; x < 29; x += 4) g.fillRect(x, 3, 1, 26);
-    g.fillRect(3, 15, 26, 1);
-    g.fillStyle = '#6a6355';
-    g.fillRect(0, 0, 32, 3);
-    g.fillRect(0, 29, 32, 3);
-    g.fillRect(0, 0, 3, 32);
-    g.fillRect(29, 0, 3, 32);
-  });
+      g.fillStyle = '#2a2724';
+      for (let x = 3; x < 29; x += 4) g.fillRect(x, 3, 1, 26);
+      g.fillRect(3, 15, 26, 1);
+      g.fillStyle = '#6a6355';
+      g.fillRect(0, 0, 32, 3);
+      g.fillRect(0, 29, 32, 3);
+      g.fillRect(0, 0, 3, 32);
+      g.fillRect(29, 0, 3, 32);
+    }),
+  );
 }
 T.winLit = [windowTex(true), windowTex(true), windowTex(true)];
 T.winDark = [windowTex(false), windowTex(false)];
@@ -287,19 +294,21 @@ T.door = tex(32, 64, (g, w, h) => {
   g.fillRect(25, 34, 2, 2);
 });
 function signTex(text, sub, bg, fg, w = 128, h = 32) {
-  return tex(w, h, (g) => {
-    g.fillStyle = bg;
-    g.fillRect(0, 0, w, h);
-    g.fillStyle = fg;
-    g.font = `bold ${Math.round(h * 0.42)}px sans-serif`;
-    g.textAlign = 'center';
-    g.fillText(text, w / 2, h * 0.5);
-    g.font = `${Math.round(h * 0.26)}px sans-serif`;
-    g.fillText(sub, w / 2, h * 0.86);
-    speckle(g, w, h, w * h * 0.06, ['rgba(0,0,0,.22)', 'rgba(255,255,255,.08)']);
-    g.fillStyle = 'rgba(40,20,10,.25)';
-    for (let i = 0; i < 4; i++) g.fillRect(Math.floor(rnd(0, w)), 0, 2, Math.floor(rnd(4, h)));
-  });
+  return flat(
+    tex(w, h, (g) => {
+      g.fillStyle = bg;
+      g.fillRect(0, 0, w, h);
+      g.fillStyle = fg;
+      g.font = `bold ${Math.round(h * 0.42)}px sans-serif`;
+      g.textAlign = 'center';
+      g.fillText(text, w / 2, h * 0.5);
+      g.font = `${Math.round(h * 0.26)}px sans-serif`;
+      g.fillText(sub, w / 2, h * 0.86);
+      speckle(g, w, h, w * h * 0.06, ['rgba(0,0,0,.22)', 'rgba(255,255,255,.08)']);
+      g.fillStyle = 'rgba(40,20,10,.25)';
+      for (let i = 0; i < 4; i++) g.fillRect(Math.floor(rnd(0, w)), 0, 2, Math.floor(rnd(4, h)));
+    }),
+  );
 }
 function furTex(kind) {
   return tex(32, 32, (g, w, h) => {
@@ -352,7 +361,6 @@ T.sky = tex(
       g.ellipse(cx, cy, r * 1.8, r * 0.6, 0, 0, Math.PI * 2);
       g.fill();
     }
-    speckle(g, w, 90, 50, ['rgba(220,220,255,.6)', 'rgba(255,255,255,.35)']);
   },
   4,
   1,
@@ -370,4 +378,16 @@ const glowTex = tex(16, 16, (g) => {
 });
 glowTex.magFilter = THREE.LinearFilter;
 
-export { tex, speckle, T, wallTex, windowTex, signTex, furTex, glowTex };
+// Soft dark ellipse for contact shadows under props and cats.
+const blobTex = tex(32, 32, (g, w, h) => {
+  const r = g.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
+  r.addColorStop(0, 'rgba(0,0,0,0.85)');
+  r.addColorStop(0.55, 'rgba(0,0,0,0.45)');
+  r.addColorStop(1, 'rgba(0,0,0,0)');
+  g.fillStyle = r;
+  g.fillRect(0, 0, w, h);
+});
+blobTex.magFilter = THREE.LinearFilter;
+blobTex.wrapS = blobTex.wrapT = THREE.ClampToEdgeWrapping;
+
+export { tex, speckle, T, wallTex, windowTex, signTex, furTex, glowTex, blobTex, flat };

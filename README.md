@@ -12,24 +12,28 @@ A first-person, PS1-style night game set in a rainy Filipino barangay. A storm i
 
 | Mode          | What it is                                                                                                                                               |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Klasik**    | Find 8 stray cats in 5 minutes. Your fastest time is saved.                                                                                              |
-| **Lagim**     | Horror. Darker streets, a draining flashlight battery, and something that follows you. It only moves when your light is not on it. Contains a jumpscare. |
-| **Kanlungan** | Build-up. Every night brings more cats. Each cat you rescue gets a name and lives at the shelter. Earn pesos to buy upgrades and build the shelter up.   |
+| **Classic**   | Find 8 stray cats in 5 minutes. Your fastest time is saved.                                                                                              |
+| **Nightmare** | Horror. Darker streets, a draining flashlight battery, and something that follows you. It only moves when your light is not on it. Contains a jumpscare. |
+| **Shelter**   | Build-up. Every night brings more cats. Each cat you rescue gets a name and lives at the shelter. Earn pesos to buy upgrades and build the shelter up.   |
 
 ![Mode select](screenshots/modes.jpg)
 
 ## Features
 
 - **Random weather every night:** steady rain, a storm with frequent lightning, light drizzle, or a clear night with the moon out
-- **Difficulty:** Madali (more time, more meows), Normal, or Mahirap (less time, a faster stalker)
+- **Difficulty:** Easy (more time, more meows), Normal, or Hard (less time, a faster stalker)
 - **Footsteps and puddles:** your steps splash and ripple when you walk through water
-- **Cat cards:** in Kanlungan, tap a rescued cat to see its fur, the night you saved it and where you found it, and rename it
+- **Cat cards:** in Shelter mode, tap a rescued cat to see its fur, the night you saved it and where you found it, and rename it
 - **Photo mode:** pause, fly the camera anywhere and save a crisp pixel screenshot
 - **Controller support:** Xbox and PlayStation controllers work in menus and in game
 - **Accessibility:** subtitles on/off, reduce flashing and shaking, bigger HUD text
 - **Loading screen** with a walking pixel cat, and a clear message if a device can't run WebGL
 - **Night-time detail:** glow around lights, wet-road reflections, parols and Christmas lights, drifting clouds, rain splashes, TVs flickering in windows, posters and street clutter
 - **First-person hand** holding the flashlight, swaying as you walk
+- **Surface detail:** bump relief on walls, roads and roofs that catches the flashlight, and a wet sheen that grows with the rain
+- **Contact shadows** at the foot of walls and under the jeepney, props and cats
+- **Atmosphere:** low drifting ground mist, raindrops on the camera lens, branching lightning bolts, twinkling stars on clear nights and a warm city glow on the horizon
+- **English** throughout, with an Ultra graphics setting for strong PCs
 
 ## Controls
 
@@ -37,7 +41,7 @@ A first-person, PS1-style night game set in a rainy Filipino barangay. A storm i
 | ------------- | --------------------------------- | --------------------------------- | ---------------------------------- |
 | Walk          | `W A S D` (`Shift` to run)        | Left joystick                     | Left stick (click it or RT to run) |
 | Look          | Mouse (click the game to lock it) | Drag the right side of the screen | Right stick                        |
-| Pick up a cat | `E` or click                      | **KUNIN** button                  | A / ✕                              |
+| Pick up a cat | `E` or click                      | **PICK UP** button                | A / ✕                              |
 | Pause         | `Esc` or `P`                      | **II** button                     | Start / Options                    |
 
 **Photo mode** (from the pause menu): `W A S D` to fly, `R` / `F` up and down, `Enter` to save a picture, `Esc` to go back. Press `F3` anytime for FPS and position.
@@ -48,8 +52,8 @@ Tips: cats' eyes shine when your flashlight hits them, and their meows come from
 
 |                                                               |                                            |
 | ------------------------------------------------------------- | ------------------------------------------ |
-| ![Sari-sari store](screenshots/sari-sari.jpg)                 | ![Lagim mode](screenshots/lagim.jpg)       |
-| ![Kanlungan shelter](screenshots/kanlungan.jpg)               | ![Phone controls](screenshots/phone.jpg)   |
+| ![Sari-sari store](screenshots/sari-sari.jpg)                 | ![Nightmare mode](screenshots/lagim.jpg)   |
+| ![Shelter mode](screenshots/kanlungan.jpg)                    | ![Phone controls](screenshots/phone.jpg)   |
 | ![Clear night](screenshots/clear-night.jpg)                   | ![Storm](screenshots/storm.jpg)            |
 | ![Cat card](screenshots/cat-card.jpg)                         | ![Loading screen](screenshots/loading.jpg) |
 | ![Parols and Christmas lights](screenshots/street-lights.jpg) |                                            |
@@ -60,7 +64,7 @@ Tips: cats' eyes shine when your flashlight hits them, and their meows come from
 - [three.js r128](https://threejs.org/) for the 3D scene, bundled in `vendor/` and loaded through an import map (no CDN needed)
 - Low-resolution rendering, PS1-style vertex snapping and an ordered-dither post-processing shader (GLSL) for the retro look
 - Pixel textures, signs and sounds (meows, rain, thunder) are all generated in code with Canvas and the Web Audio API
-- Settings and Kanlungan progress are saved in the browser with `localStorage`
+- Settings and Shelter progress are saved in the browser with `localStorage`
 - Game rules live in a pure module (`js/core/rules.js`) with unit tests; ESLint, Prettier and GitHub Actions check every push
 
 ## Project structure
@@ -89,11 +93,11 @@ pusa-rescue/
 │   │   └── util.js         Random helpers
 │   ├── data/
 │   │   ├── cats.js         Hiding spots and cat names
-│   │   ├── shop.js         Kanlungan upgrades and prices
+│   │   ├── shop.js         Shelter upgrades and prices
 │   │   ├── weather.js      Weather presets
 │   │   └── text.js         All in-game dialogue and messages
 │   ├── engine/             Renderer, first-person hand, materials, textures, quality, shader loader
-│   ├── world/              Street map, details (lights, reflections, parols), cats, shelter, Lagim props, weather
+│   ├── world/              Street map, details (lights, reflections, parols), cats, shelter, Nightmare props, mist and lightning, weather
 │   └── ui/                 Screens and subtitles, menu buttons, shop and cat cards
 ├── tests/                  Unit tests (node:test)
 ├── vendor/                 three.js r128 and its license

@@ -1,4 +1,4 @@
-// Kanlungan screen: the upgrade list, the roster of named cats and each cat's card.
+// Shelter screen: the upgrade list, the roster of named cats and each cat's card.
 import { $ } from './screens.js';
 import { save, writeSave } from '../core/storage.js';
 import { SHOP } from '../data/shop.js';

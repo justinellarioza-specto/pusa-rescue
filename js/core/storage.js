@@ -1,4 +1,4 @@
-// Everything saved in the player's browser: settings, Kanlungan progress and best times.
+// Everything saved in the player's browser: settings, Shelter progress and best times.
 export const store = {
   get(k, d) {
     try {
@@ -41,7 +41,7 @@ export const writeSave = () => store.set('pr-save', save);
 export const best = store.get('pr-best', { classic: null });
 export const writeBest = () => store.set('pr-best', best);
 
-// Wipes Kanlungan progress and best times (objects are reset in place so imports stay valid).
+// Wipes Shelter progress and best times (objects are reset in place so imports stay valid).
 export function resetProgress() {
   Object.assign(save, freshSave());
   best.classic = null;

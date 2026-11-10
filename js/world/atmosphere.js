@@ -23,6 +23,8 @@ import {
 } from './street.js';
 import { rosterMeshes } from './cats.js';
 import { updateDetails } from './details.js';
+import { updatePolish, newBolt } from './polish.js';
+import { setWetness } from '../engine/materials.js';
 
 // ---------- weather ----------
 let weather = WEATHER.ulan,
@@ -55,6 +57,7 @@ export function setWeather(key) {
   env.fogAdd = weather.fog;
   scene.fog.density = env.fogBase + env.fogAdd;
   setRainLevel(weather.rainVol);
+  setWetness(weather.rain > 0 ? 0.35 + weather.rain * 0.65 : 0.2); // still damp on a clear night
   boltTimer = rnd(weather.bolt[0] * 0.5, weather.bolt[1]);
 }
 export const getWeather = () => weatherKey;
@@ -93,6 +96,7 @@ function updateRipples(dt) {
 }
 
 // ---------- per frame ----------
+let lensLevel = 0;
 let boltTimer = rnd(8, 16),
   boltT = 0,
   thunderIn = -1,
@@ -174,6 +178,7 @@ export function atmos(dt, t) {
     boltTimer = rnd(weather.bolt[0], weather.bolt[1]);
     boltT = 0.42;
     thunderIn = rnd(0.7, 2.2);
+    newBolt();
   }
   if (boltT > 0) boltT -= dt;
   const on = boltT > 0 && (boltT > 0.3 || boltT < 0.14);
@@ -184,5 +189,13 @@ export function atmos(dt, t) {
     if (thunderIn <= 0) thunder();
   }
   updateDetails(dt, t, weather, on && !settings.calm);
+  updatePolish(dt, t, weatherKey, env.mode, on && !settings.calm);
+
+  // raindrops gather on the lens when it rains, more when you look up
+  const lensTarget = QUALITY[settings.quality].lens
+    ? weather.rain * Math.max(0.25, Math.min(1, 0.45 + camera.rotation.x * 1.6))
+    : 0;
+  lensLevel += (lensTarget - lensLevel) * Math.min(1, dt * 0.6);
+  post.uniforms.lens.value = lensLevel;
   post.uniforms.time.value = t;
 }

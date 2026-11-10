@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="tl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#050609">
-<meta name="description" content="Iligtas ang mga pusang gala sa isang maulang gabi sa barangay.">
+<meta name="description" content="Rescue stray cats on a rainy night in a Filipino barangay.">
 <title>Pusa Rescue</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,9 +24,9 @@
     <div class="hudtop">
       <span id="clock">11:00 PM</span>
       <div class="hudR">
-        <span id="count">PUSA <b>0</b>/8</span>
+        <span id="count">CATS <b>0</b>/8</span>
         <span id="coinsHud" hidden>₱<b>0</b></span>
-        <span id="battery" hidden>ILAW <i></i></span>
+        <span id="battery" hidden>LIGHT <i></i></span>
       </div>
     </div>
     <div class="cross"></div>
@@ -35,7 +35,7 @@
     <div id="touch" hidden>
       <div id="lookpad"></div>
       <div id="stick"><div id="knob"></div></div>
-      <button id="grab" type="button">KUNIN</button>
+      <button id="grab" type="button">PICK UP</button>
       <button id="pauseBtn" type="button" aria-label="Pause">II</button>
     </div>
   </div>
@@ -45,10 +45,10 @@
 
   <!-- photo mode -->
   <div id="photoBar" hidden>
-    <span class="photoHint">PHOTO MODE · <kbd>W A S D</kbd> lipad · <kbd>R</kbd>/<kbd>F</kbd> taas-baba · <kbd>Enter</kbd> kunan · <kbd>Esc</kbd> bumalik</span>
+    <span class="photoHint">PHOTO MODE · <kbd>W A S D</kbd> fly · <kbd>R</kbd>/<kbd>F</kbd> up/down · <kbd>Enter</kbd> take photo · <kbd>Esc</kbd> back</span>
     <div class="btns">
-      <button class="btn" id="photoShot" type="button">KUNAN</button>
-      <button class="btn ghost" id="photoExit" type="button">BUMALIK</button>
+      <button class="btn" id="photoShot" type="button">TAKE PHOTO</button>
+      <button class="btn ghost" id="photoExit" type="button">BACK</button>
     </div>
   </div>
 
@@ -56,43 +56,43 @@
   <section id="menu" class="layer shadeL">
     <div>
       <h1 class="logo">PUSA<br><span>RESCUE</span></h1>
-      <p class="tagline">Brgy. Maligaya · 11:00 PM · Umuulan na</p>
+      <p class="tagline">Brgy. Maligaya · 11:00 PM · It's raining</p>
     </div>
     <nav class="list" aria-label="Main menu">
-      <button class="item" id="mPlay" type="button">MAGLARO</button>
-      <button class="item" id="mHow" type="button">PAANO MAGLARO</button>
+      <button class="item" id="mPlay" type="button">PLAY</button>
+      <button class="item" id="mHow" type="button">HOW TO PLAY</button>
       <button class="item" id="mSet" type="button">SETTINGS</button>
       <button class="item" id="mFull" type="button">FULLSCREEN</button>
     </nav>
-    <p class="foot">Gawa gamit ang three.js · Headphones recommended</p>
+    <p class="foot">Made with three.js · Headphones recommended</p>
   </section>
 
   <!-- mode select -->
   <section id="modes" class="layer shadeAll" hidden>
     <div class="sheet">
-      <h2>PUMILI NG MODE</h2>
+      <h2>CHOOSE A MODE</h2>
       <div class="modes">
-        <button class="mode" id="modeClassic" type="button"><b>KLASIK</b><span>Hanapin ang 8 pusang gala bago maghatinggabi. Isang gabi, limang minuto.</span><em id="bestClassic">Wala pang record</em></button>
-        <button class="mode horror" id="modeHorror" type="button"><b>LAGIM</b><span>Mas madilim. Nauubos ang baterya ng flashlight. May sumusunod sa iyo, at gumagalaw lang siya kapag hindi mo siya iniilawan.</span><em class="warn">May jumpscare at malakas na tunog</em></button>
-        <button class="mode" id="modeBuild" type="button"><b>KANLUNGAN</b><span>Gabi-gabi, mas maraming pusa. Kumita ng piso, mag-upgrade, at palakihin ang kanlungan. Bawat pusa ay may pangalan.</span><em id="buildStatus">Gabi 1</em></button>
+        <button class="mode" id="modeClassic" type="button"><b>CLASSIC</b><span>Find 8 stray cats before midnight. One night, five minutes.</span><em id="bestClassic">No record yet</em></button>
+        <button class="mode horror" id="modeHorror" type="button"><b>NIGHTMARE</b><span>Darker streets and a flashlight that runs out of battery. Something follows you, and it only moves when your light isn't on it.</span><em class="warn">Contains a jumpscare and loud sounds</em></button>
+        <button class="mode" id="modeBuild" type="button"><b>SHELTER</b><span>More cats every night. Earn pesos, buy upgrades and build up Lola's shelter. Every cat gets a name.</span><em id="buildStatus">Night 1</em></button>
       </div>
-      <div class="row diffRow"><label for="sDiff">Hirap</label><select id="sDiff"><option value="easy">Madali (mas mahabang oras)</option><option value="normal">Normal</option><option value="hard">Mahirap (mas maikling oras)</option></select></div>
-      <div class="btns"><button class="btn ghost" data-back type="button">BUMALIK</button></div>
+      <div class="row diffRow"><label for="sDiff">Difficulty</label><select id="sDiff"><option value="easy">Easy (more time)</option><option value="normal">Normal</option><option value="hard">Hard (less time)</option></select></div>
+      <div class="btns"><button class="btn ghost" data-back type="button">BACK</button></div>
     </div>
   </section>
 
   <!-- how to play -->
   <section id="how" class="layer shadeAll" hidden>
     <div class="sheet">
-      <h2>PAANO MAGLARO</h2>
+      <h2>HOW TO PLAY</h2>
       <div class="how">
-        <div><h3>Computer</h3><ul><li><kbd>W A S D</kbd> lakad, <kbd>Shift</kbd> takbo</li><li>Mouse para tumingin</li><li><kbd>E</kbd> o click para kunin ang pusa</li><li><kbd>Esc</kbd> o <kbd>P</kbd> para mag-pause</li></ul></div>
-        <div><h3>Cellphone</h3><ul><li>Kaliwang bilog para maglakad</li><li>I-drag ang kanang bahagi para tumingin</li><li>KUNIN para kunin ang pusa</li><li>Mas maganda kapag naka-landscape</li></ul></div>
-        <div><h3>Controller</h3><ul><li>Kaliwang stick lakad (pindutin o RT para tumakbo)</li><li>Kanang stick tumingin</li><li><kbd>A</kbd> / <kbd>✕</kbd> kunin ang pusa</li><li><kbd>Start</kbd> pause · <kbd>B</kbd> / <kbd>◯</kbd> bumalik</li></ul></div>
-        <div><h3>Photo mode</h3><ul><li>Sa pause menu, piliin ang PHOTO MODE</li><li>Lumipad gamit ang <kbd>W A S D</kbd>, <kbd>R</kbd> pataas, <kbd>F</kbd> pababa</li><li><kbd>Enter</kbd> para kunan ng larawan</li><li><kbd>F3</kbd> kahit kailan: FPS at posisyon</li></ul></div>
-        <div><h3>Mga tip</h3><ul><li>Kumikinang ang mata ng pusa kapag naiilawan.</li><li>Makinig sa ngiyaw; kaliwa o kanan ang tunog.</li><li>Tingnan sa ilalim, sa likod, at sa itaas ng mga bagay.</li><li>Sa LAGIM: huwag mong alisin ang ilaw sa kanya.</li></ul></div>
+        <div><h3>Computer</h3><ul><li><kbd>W A S D</kbd> walk, <kbd>Shift</kbd> run</li><li>Mouse to look around</li><li><kbd>E</kbd> or click to pick up a cat</li><li><kbd>Esc</kbd> or <kbd>P</kbd> to pause</li></ul></div>
+        <div><h3>Phone</h3><ul><li>Left circle to walk</li><li>Drag the right side to look around</li><li>PICK UP to grab a cat</li><li>Plays best in landscape</li></ul></div>
+        <div><h3>Controller</h3><ul><li>Left stick to walk (click it or hold RT to run)</li><li>Right stick to look</li><li><kbd>A</kbd> / <kbd>✕</kbd> to pick up a cat</li><li><kbd>Start</kbd> pause · <kbd>B</kbd> / <kbd>◯</kbd> back</li></ul></div>
+        <div><h3>Photo mode</h3><ul><li>Choose PHOTO MODE in the pause menu</li><li>Fly with <kbd>W A S D</kbd>, <kbd>R</kbd> up, <kbd>F</kbd> down</li><li><kbd>Enter</kbd> to take a photo</li><li><kbd>F3</kbd> anytime: FPS and position</li></ul></div>
+        <div><h3>Tips</h3><ul><li>Cats' eyes shine when your flashlight hits them.</li><li>Listen for meows; they come from the left or right.</li><li>Look under, behind and on top of things.</li><li>In NIGHTMARE: keep your light on it.</li></ul></div>
       </div>
-      <div class="btns"><button class="btn ghost" data-back type="button">BUMALIK</button></div>
+      <div class="btns"><button class="btn ghost" data-back type="button">BACK</button></div>
     </div>
   </section>
 
@@ -103,16 +103,16 @@
       <div class="rows">
         <div class="row"><label for="sSens">Mouse sensitivity</label><input id="sSens" type="range" min="0.3" max="2.5" step="0.1"></div>
         <div class="row"><label for="sVol">Volume</label><input id="sVol" type="range" min="0" max="1" step="0.05"></div>
-        <div class="row"><label for="sQual">Graphics</label><select id="sQual"><option value="low">Low (mabilis)</option><option value="med">Medium</option><option value="high">High</option></select></div>
+        <div class="row"><label for="sQual">Graphics</label><select id="sQual"><option value="low">Low (fastest)</option><option value="med">Medium</option><option value="high">High</option><option value="ultra">Ultra (strong PC)</option></select></div>
         <div class="row"><label for="sInv">Invert look (Y)</label><input id="sInv" type="checkbox"></div>
         <div class="row"><label for="sSubs">Subtitles</label><input id="sSubs" type="checkbox"></div>
-        <div class="row"><label for="sCalm">Bawasan ang flash at yanig</label><input id="sCalm" type="checkbox"></div>
-        <div class="row"><label for="sBig">Malaking HUD text</label><input id="sBig" type="checkbox"></div>
-        <div class="row"><label for="sFps">Ipakita ang FPS (F3)</label><input id="sFps" type="checkbox"></div>
+        <div class="row"><label for="sCalm">Reduce flashing and shaking</label><input id="sCalm" type="checkbox"></div>
+        <div class="row"><label for="sBig">Bigger HUD text</label><input id="sBig" type="checkbox"></div>
+        <div class="row"><label for="sFps">Show FPS (F3)</label><input id="sFps" type="checkbox"></div>
       </div>
       <div class="btns">
-        <button class="btn ghost" data-back type="button">BUMALIK</button>
-        <button class="btn danger" id="resetSave" type="button">BURAHIN ANG SAVE</button>
+        <button class="btn ghost" data-back type="button">BACK</button>
+        <button class="btn danger" id="resetSave" type="button">DELETE SAVE</button>
       </div>
     </div>
   </section>
@@ -120,13 +120,13 @@
   <!-- pause -->
   <section id="pause" class="layer shadeL" hidden>
     <div class="sheet" style="margin:0">
-      <h2>NAKA-PAUSE</h2>
+      <h2>PAUSED</h2>
       <nav class="list">
-        <button class="item" id="pResume" type="button">ITULOY</button>
+        <button class="item" id="pResume" type="button">RESUME</button>
         <button class="item" id="pPhoto" type="button">PHOTO MODE</button>
         <button class="item" id="pSet" type="button">SETTINGS</button>
         <button class="item" id="pFull" type="button">FULLSCREEN</button>
-        <button class="item" id="pQuit" type="button">BUMALIK SA MENU</button>
+        <button class="item" id="pQuit" type="button">QUIT TO MENU</button>
       </nav>
     </div>
   </section>
@@ -134,10 +134,10 @@
   <!-- result -->
   <section id="result" class="layer shadeAll" hidden>
     <div class="sheet">
-      <h2 id="rTitle">LIGTAS NA SILA</h2>
+      <h2 id="rTitle">THEY'RE SAFE</h2>
       <p id="rText"></p>
       <div class="btns">
-        <button class="btn" id="rAgain" type="button">ULITIN</button>
+        <button class="btn" id="rAgain" type="button">PLAY AGAIN</button>
         <button class="btn ghost" id="rMenu" type="button">MENU</button>
       </div>
     </div>
@@ -146,24 +146,24 @@
   <!-- shelter / shop -->
   <section id="shelter" class="layer shadeL" hidden>
     <div class="shop">
-      <h2 id="shTitle">KANLUNGAN</h2>
+      <h2 id="shTitle">SHELTER</h2>
       <p class="sum" id="shSum"></p>
       <div class="coins">₱<span id="shCoins">0</span></div>
       <div id="shopList"></div>
       <div>
-        <p class="sum" id="rosterLabel">Mga alaga</p>
+        <p class="sum" id="rosterLabel">Your cats</p>
         <div class="roster" id="roster"></div>
       </div>
       <div id="catCard" class="catCard" hidden>
         <h3 id="ccName"></h3>
         <ul id="ccInfo"></ul>
-        <label for="ccInput">Palitan ang pangalan</label>
-        <div class="ccRow"><input id="ccInput" type="text" maxlength="16" autocomplete="off" spellcheck="false"><button class="btn" id="ccSave" type="button">I-SAVE</button></div>
+        <label for="ccInput">Rename</label>
+        <div class="ccRow"><input id="ccInput" type="text" maxlength="16" autocomplete="off" spellcheck="false"><button class="btn" id="ccSave" type="button">SAVE</button></div>
         <p id="ccErr" class="err" role="alert" hidden></p>
-        <button class="btn ghost" id="ccClose" type="button">ISARA</button>
+        <button class="btn ghost" id="ccClose" type="button">CLOSE</button>
       </div>
       <div class="btns">
-        <button class="btn" id="shNext" type="button">SUSUNOD NA GABI</button>
+        <button class="btn" id="shNext" type="button">NEXT NIGHT</button>
         <button class="btn ghost" id="shMenu" type="button">MENU</button>
       </div>
     </div>
@@ -171,8 +171,8 @@
 
   <div id="loading" role="status">
     <div class="walker" aria-hidden="true"><i></i></div>
-    <p id="loadMsg">Naglo-load...</p>
-    <noscript><p>Kailangan naka-on ang JavaScript para malaro ito.</p></noscript>
+    <p id="loadMsg">Loading...</p>
+    <noscript><p>JavaScript needs to be turned on to play this game.</p></noscript>
   </div>
 
   <div id="scare" hidden><div class="face"><div class="mouth"></div></div></div>

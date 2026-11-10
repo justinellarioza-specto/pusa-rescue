@@ -1,4 +1,4 @@
-// Kanlungan upgrades that appear around Lola's box: bowls, roof, walls, string lights.
+// Shelter upgrades that appear around Lola's box: bowls, roof, walls, string lights.
 import * as THREE from 'three';
 import { scene } from '../engine/renderer.js';
 import { mat } from '../engine/materials.js';

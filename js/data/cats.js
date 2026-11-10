@@ -1,19 +1,19 @@
-// Where cats can hide (the first 8 are the Klasik layout) and the names given to rescued cats.
+// Where cats can hide (the first 8 are the Classic layout) and the names given to rescued cats.
 // kind: fur pattern · p: position [x, y, z] · face: rotation · where: Lola's hint text
 
 export const CAT_SPOTS = [
-  { kind: 'orange', p: [4.6, 0.02, -25.4], face: -Math.PI / 2, where: 'sa ilalim ng jeep' },
-  { kind: 'black', p: [-8.0, 2.48, -15.2], face: Math.PI / 2, where: 'sa bubong ng tindahan' },
-  { kind: 'calico', p: [-7.5, 0.05, -30.8], face: Math.PI / 2, where: 'sa loob ng kahon' },
-  { kind: 'gray', p: [8.25, 0.02, -8.7], face: -Math.PI / 2, where: 'sa likod ng drum' },
-  { kind: 'white', p: [-4.3, 0.02, -51.9], face: 0, where: 'sa ilalim ng bangko' },
-  { kind: 'tabby', p: [4.2, 2.0, -58.3], face: 0, where: 'sa ibabaw ng pader' },
-  { kind: 'orange', p: [-7.8, 0.6, -22], face: Math.PI / 2, where: 'sa hollow blocks' },
-  { kind: 'black', p: [8.2, 0.02, -38.6], face: -Math.PI / 2, where: 'sa tabi ng poste' },
-  { kind: 'gray', p: [-7.4, 0.02, -46.4], face: Math.PI / 2, where: 'sa tabi ng tricycle' },
-  { kind: 'white', p: [-7.7, 0.02, -14.0], face: Math.PI / 2, where: 'sa harap ng tindahan' },
-  { kind: 'calico', p: [-8.3, 0.02, -39.2], face: Math.PI / 2, where: 'sa ilalim ng sampayan' },
-  { kind: 'tabby', p: [5.4, 1.88, -26.8], face: -Math.PI / 2, where: 'sa bubong ng jeep' },
+  { kind: 'orange', p: [4.6, 0.02, -25.4], face: -Math.PI / 2, where: 'under the jeepney' },
+  { kind: 'black', p: [-8.0, 2.48, -15.2], face: Math.PI / 2, where: 'on the store roof' },
+  { kind: 'calico', p: [-7.5, 0.05, -30.8], face: Math.PI / 2, where: 'inside the box' },
+  { kind: 'gray', p: [8.25, 0.02, -8.7], face: -Math.PI / 2, where: 'behind the drum' },
+  { kind: 'white', p: [-4.3, 0.02, -51.9], face: 0, where: 'under the bench' },
+  { kind: 'tabby', p: [4.2, 2.0, -58.3], face: 0, where: 'on top of the wall' },
+  { kind: 'orange', p: [-7.8, 0.6, -22], face: Math.PI / 2, where: 'by the hollow blocks' },
+  { kind: 'black', p: [8.2, 0.02, -38.6], face: -Math.PI / 2, where: 'next to the post' },
+  { kind: 'gray', p: [-7.4, 0.02, -46.4], face: Math.PI / 2, where: 'next to the tricycle' },
+  { kind: 'white', p: [-7.7, 0.02, -14.0], face: Math.PI / 2, where: 'in front of the store' },
+  { kind: 'calico', p: [-8.3, 0.02, -39.2], face: Math.PI / 2, where: 'under the clothesline' },
+  { kind: 'tabby', p: [5.4, 1.88, -26.8], face: -Math.PI / 2, where: 'on the jeepney roof' },
 ];
 
 export const CAT_NAMES = [
@@ -57,4 +57,21 @@ export const CAT_NAMES = [
   'Totoy',
   'Saging',
   'Bilog',
+];
+
+// The same hints in Tagalog, in the same order: cats saved before the English update still
+// carry these, and the cat card translates them.
+export const LEGACY_WHERE = [
+  'sa ilalim ng jeep',
+  'sa bubong ng tindahan',
+  'sa loob ng kahon',
+  'sa likod ng drum',
+  'sa ilalim ng bangko',
+  'sa ibabaw ng pader',
+  'sa hollow blocks',
+  'sa tabi ng poste',
+  'sa tabi ng tricycle',
+  'sa harap ng tindahan',
+  'sa ilalim ng sampayan',
+  'sa bubong ng jeep',
 ];

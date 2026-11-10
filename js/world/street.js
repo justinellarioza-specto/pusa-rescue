@@ -6,6 +6,7 @@ import { mat } from '../engine/materials.js';
 import { T, wallTex, signTex } from '../engine/textures.js';
 import { rnd, pick } from '../core/util.js';
 import { colliders, shade, box, plane, cyl } from './helpers.js';
+import { QUALITY } from '../config.js';
 
 // sky + far skyline silhouettes (unaffected by fog)
 const sky = new THREE.Mesh(
@@ -156,7 +157,7 @@ scene.add(storeGlow);
 plane(
   3.8,
   0.85,
-  mat({ map: signTex('SARI-SARI STORE', "Aling Nena's · Load · Yelo · Softdrinks", '#d8b13a', '#8b1e1a', 192, 44) }),
+  mat({ map: signTex('SARI-SARI STORE', "Aling Nena's · Load · Ice · Softdrinks", '#d8b13a', '#8b1e1a', 192, 44) }),
   -8.95,
   2.95,
   -15,
@@ -206,7 +207,7 @@ const ws = jpart(
 ws.rotation.y = Math.PI;
 const rs = jpart(
   new THREE.PlaneGeometry(1.6, 0.32),
-  mat({ map: signTex('MALIGAYA', 'KANTO · TERMINAL · PALENGKE', '#ece6d4', '#b0261e', 128, 28) }),
+  mat({ map: signTex('MALIGAYA', 'CORNER · TERMINAL · MARKET', '#ece6d4', '#b0261e', 128, 28) }),
   0,
   2.07,
   -2.0,
@@ -298,7 +299,7 @@ box(18, 2.0, 0.4, mat({ map: T.block }), 0, 1.0, -58.4, true);
 plane(
   1.6,
   0.6,
-  mat({ map: signTex('BAWAL UMIHI DITO', 'Multa ₱500 · Brgy. Maligaya', '#e8e4da', '#b3221b', 128, 40) }),
+  mat({ map: signTex('NO PEEING HERE', '₱500 fine · Brgy. Maligaya', '#e8e4da', '#b3221b', 128, 40) }),
   -3,
   1.25,
   -58.19,
@@ -430,14 +431,7 @@ const tarp = plane(
   5.4,
   1.0,
   mat({
-    map: signTex(
-      'MALIGAYANG PIYESTA!',
-      'Brgy. Maligaya · Libreng sayawan sa covered court',
-      '#b3221b',
-      '#f2d24a',
-      192,
-      40,
-    ),
+    map: signTex('HAPPY FIESTA!', 'Brgy. Maligaya · Free dance at the covered court', '#b3221b', '#f2d24a', 192, 40),
     side: THREE.DoubleSide,
   }),
   0,
@@ -477,7 +471,7 @@ box(1.6, 0.9, 1.0, mat({ map: T.cardboard }), SHELTER.x, 0.45, SHELTER.z + 0.6, 
 plane(
   1.4,
   0.36,
-  mat({ map: signTex('KANLUNGAN', 'mga pusa dito', '#c8b48a', '#3a2412') }),
+  mat({ map: signTex('SHELTER', 'cats live here', '#c8b48a', '#3a2412') }),
   SHELTER.x,
   0.6,
   SHELTER.z + 0.09,
@@ -493,7 +487,7 @@ lantern.position.y += 0.1;
 scene.add(lantern);
 
 // rain
-const RAIN = 1600;
+const RAIN = Math.max(...Object.values(QUALITY).map((q) => q.rain)); // buffer fits the biggest preset
 const rainPos = new Float32Array(RAIN * 6);
 const rainGeo = new THREE.BufferGeometry();
 rainGeo.setAttribute('position', new THREE.BufferAttribute(rainPos, 3));

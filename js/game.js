@@ -1,5 +1,5 @@
-// Game rules in motion: the three modes, one round of play, the LAGIM stalker AI,
-// round results, the Kanlungan night cycle and photo mode.
+// Game rules in motion: the three modes, one round of play, the Nightmare-mode stalker AI,
+// round results, the Shelter night cycle and photo mode.
 import * as THREE from 'three';
 import { scene, camera, flash, flashTarget, env, post } from './engine/renderer.js';
 import { settings, save, best, writeSave, writeBest } from './core/storage.js';
@@ -57,6 +57,7 @@ export const getMode = () => mode;
 const posts0 = posts.map((p) => p.flicker);
 function setLook(m) {
   const horror = m === 'horror';
+  env.mode = m;
   env.fogBase = horror ? 0.085 : 0.05;
   scene.fog.density = env.fogBase + env.fogAdd;
   env.hemiBase = horror ? 0.32 : 0.7;
@@ -289,7 +290,7 @@ function update(dt, t) {
     -5,
   );
 
-  // flashlight power (the battery only drains in LAGIM)
+  // flashlight power (the battery only drains in Nightmare mode)
   let power = 1;
   if (mode === 'horror') {
     battery = Math.max(0, battery - dt * 0.6);
@@ -395,7 +396,7 @@ function update(dt, t) {
   }
 }
 
-// ---------- LAGIM: the stalker moves only when your light is not on it ----------
+// ---------- NIGHTMARE: the stalker moves only when your light is not on it ----------
 function spawnStalker(near) {
   const back = new THREE.Vector3(-fwd.x, 0, -fwd.z).normalize();
   const dist = near ? rnd(12, 16) : rnd(18, 24);

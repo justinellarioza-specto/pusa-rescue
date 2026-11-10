@@ -8,7 +8,7 @@ export const DIFFICULTY = {
 
 const NO_UPGRADES = { flash: 0, shoes: 0, time: 0, bowls: 0, home: 0 };
 
-// Everything that changes per mode / difficulty / Kanlungan upgrades, worked out once per round.
+// Everything that changes per mode / difficulty / Shelter upgrades, worked out once per round.
 export function roundSetup(mode, save, diffKey = 'normal') {
   const diff = DIFFICULTY[diffKey] || DIFFICULTY.normal;
   const build = mode === 'build';
@@ -79,7 +79,7 @@ export function clockLabel(timeLeft, timeLimit) {
   return `11:${String(mins).padStart(2, '0')} PM`;
 }
 
-// Random weather for a round. LAGIM is always wet and stormy.
+// Random weather for a round. Nightmare mode is always wet and stormy.
 export function rollWeather(mode, rand = Math.random) {
   const table =
     mode === 'horror'

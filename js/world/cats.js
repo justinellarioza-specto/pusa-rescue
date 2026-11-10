@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import { scene } from '../engine/renderer.js';
 import { mat } from '../engine/materials.js';
-import { furTex, glowTex } from '../engine/textures.js';
+import { furTex, glowTex, blobTex } from '../engine/textures.js';
 import { rnd } from '../core/util.js';
 import { save } from '../core/storage.js';
 import { shade } from './helpers.js';
@@ -10,6 +10,9 @@ import { CAT_SPOTS } from '../data/cats.js';
 
 const hitMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
 const noseM = mat({ color: 0xc77b7b });
+
+const blobGeo = new THREE.PlaneGeometry(0.42, 0.62);
+const blobMat = new THREE.MeshBasicMaterial({ map: blobTex, transparent: true, opacity: 0.6, depthWrite: false });
 
 function makeCat(kind) {
   const gr = new THREE.Group();
@@ -79,6 +82,11 @@ function makeCat(kind) {
   const hit = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.7, 0.9), hitMat);
   hit.position.y = 0.3;
   gr.add(hit);
+  // soft contact shadow under the cat
+  const blob = new THREE.Mesh(blobGeo, blobMat);
+  blob.rotation.x = -Math.PI / 2;
+  blob.position.y = 0.012;
+  gr.add(blob);
   return { group: gr, eyes, tail, hit, head };
 }
 

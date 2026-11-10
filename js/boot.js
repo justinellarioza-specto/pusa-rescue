@@ -21,7 +21,7 @@
   }
   if (!gl) {
     fail(
-      'Paumanhin, hindi kaya ng device o browser na ito ang 3D graphics (WebGL). Subukan sa ibang browser tulad ng Chrome, o i-on ang "hardware acceleration" sa settings.'
+      'Sorry, this device or browser can\'t run 3D graphics (WebGL). Try another browser like Chrome, or turn on "hardware acceleration" in its settings.'
     );
     return;
   }
@@ -34,20 +34,18 @@
     HTMLScriptElement.supports('importmap')
   );
   if (noModules || noImportMap) {
-    fail(
-      'Paumanhin, luma na ang browser na ito para sa larong ito. I-update ang browser o subukan ang Chrome, Edge, Firefox o Safari.'
-    );
+    fail('Sorry, this browser is too old for this game. Update it, or try Chrome, Edge, Firefox or Safari.');
     return;
   }
 
   window.addEventListener('error', function (e) {
     var file = e.filename ? e.filename.split('/').pop() : '';
-    fail('May nangyaring error habang naglo-load' + (file ? ' (' + file + ')' : '') + '. Subukang i-refresh ang page.');
+    fail('Something went wrong while loading' + (file ? ' (' + file + ')' : '') + '. Try refreshing the page.');
   });
   window.addEventListener('unhandledrejection', function () {
-    fail('Hindi ma-load ang ilang file ng laro. Suriin ang internet at i-refresh ang page.');
+    fail('Some game files could not load. Check your internet connection and refresh the page.');
   });
   setTimeout(function () {
-    if (box && !box.hidden) msg.textContent = 'Naglo-load pa rin... medyo mabagal ang koneksyon.';
+    if (box && !box.hidden) msg.textContent = 'Still loading... the connection is a bit slow.';
   }, 12000);
 })();

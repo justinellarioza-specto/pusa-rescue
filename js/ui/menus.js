@@ -30,7 +30,7 @@ $('mSet').addEventListener('click', () => {
 });
 $('mFull').addEventListener('click', toggleFull);
 
-// BUMALIK buttons return to the pause menu if a round is paused, otherwise to the main menu
+// BACK buttons return to the pause menu if a round is paused, otherwise to the main menu
 export function goBack() {
   if (!$('catCard').hidden) {
     $('catCard').hidden = true;
@@ -62,7 +62,7 @@ $('modeBuild').addEventListener('click', () => {
   }
 });
 
-// Kanlungan, pause and results
+// Shelter, pause and results
 $('shNext').addEventListener('click', () => startGame('build'));
 $('shMenu').addEventListener('click', toMenu);
 $('pResume').addEventListener('click', resumeGame);
@@ -86,7 +86,7 @@ function openSettings() {
   $('sCalm').checked = settings.calm;
   $('sBig').checked = settings.bigHud;
   $('sFps').checked = settings.fps;
-  $('resetSave').textContent = 'BURAHIN ANG SAVE';
+  $('resetSave').textContent = 'DELETE SAVE';
   resetArmed = false;
   show('settings');
 }
@@ -120,10 +120,10 @@ let resetArmed = false;
 $('resetSave').addEventListener('click', () => {
   if (!resetArmed) {
     resetArmed = true;
-    $('resetSave').textContent = 'SIGURADO? I-CLICK ULIT';
+    $('resetSave').textContent = 'SURE? CLICK AGAIN';
     return;
   }
   resetProgress();
   resetArmed = false;
-  $('resetSave').textContent = 'NABURA NA';
+  $('resetSave').textContent = 'DELETED';
 });

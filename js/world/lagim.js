@@ -1,11 +1,11 @@
-// LAGIM mode props: the stalker figure and the flashlight batteries.
+// Nightmare mode props: the stalker figure and the flashlight batteries.
 import * as THREE from 'three';
 import { scene } from '../engine/renderer.js';
 import { mat } from '../engine/materials.js';
 import { glowTex } from '../engine/textures.js';
 import { shade, box } from './helpers.js';
 
-// the stalker for LAGIM mode
+// the stalker for Nightmare mode
 const figM = mat({ color: 0x08080a });
 const figure = new THREE.Group();
 (() => {
@@ -41,7 +41,7 @@ const figure = new THREE.Group();
 figure.visible = false;
 scene.add(figure);
 
-// batteries for LAGIM mode
+// batteries for Nightmare mode
 const batM = mat({ color: 0x3f8a3a, emissive: 0x16320f });
 const batSpots = [
   [-6.4, -9],

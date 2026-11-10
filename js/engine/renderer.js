@@ -25,7 +25,7 @@ scene.fog = new THREE.FogExp2(FOG, 0.05);
 const camera = new THREE.PerspectiveCamera(66, RES_W / RES_H, 0.05, 140);
 scene.add(camera);
 
-const env = { hemiBase: 0.7, fogBase: 0.05, fogAdd: 0 }; // ambient light and fog, changed per mode and weather
+const env = { hemiBase: 0.7, fogBase: 0.05, fogAdd: 0, mode: 'classic' }; // ambient light and fog, changed per mode and weather
 const hemi = new THREE.HemisphereLight(0x4a5c90, 0x1a1820, env.hemiBase);
 scene.add(hemi);
 const moon = new THREE.DirectionalLight(0x7088c4, 0.3);
@@ -58,6 +58,7 @@ const post = new THREE.ShaderMaterial({
     bolt: { value: 0 },
     fear: { value: 0 },
     glow: { value: 0.9 },
+    lens: { value: 0 },
   },
   vertexShader: postVert,
   fragmentShader: postFrag,

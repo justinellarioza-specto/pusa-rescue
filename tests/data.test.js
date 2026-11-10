@@ -1,14 +1,14 @@
 // Checks that the game data files are complete and consistent. Run with: npm test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { CAT_SPOTS, CAT_NAMES } from '../js/data/cats.js';
+import { CAT_SPOTS, CAT_NAMES, LEGACY_WHERE } from '../js/data/cats.js';
 import { SHOP } from '../js/data/shop.js';
 import { WEATHER } from '../js/data/weather.js';
 import { TXT } from '../js/data/text.js';
 
 const KINDS = ['orange', 'black', 'white', 'gray', 'calico', 'tabby'];
 
-test('there are 12 hiding spots and the first 8 make the Klasik layout', () => {
+test('there are 12 hiding spots and the first 8 make the Classic layout', () => {
   assert.equal(CAT_SPOTS.length, 12);
 });
 
@@ -17,7 +17,11 @@ test('every hiding spot is inside the street and has a hint', () => {
     assert.ok(KINDS.includes(s.kind), `unknown fur ${s.kind}`);
     const [x, y, z] = s.p;
     assert.ok(Math.abs(x) <= 9 && z <= 6 && z >= -59 && y >= 0 && y < 3, `spot out of bounds: ${s.p}`);
-    assert.ok(s.where.startsWith('sa '), `hint should read "sa ...": ${s.where}`);
+    assert.match(
+      s.where,
+      /^(under|on|inside|behind|by|next to|in front of) /,
+      `hint should read like "under the ...": ${s.where}`,
+    );
   }
 });
 
@@ -50,11 +54,23 @@ test('every weather has a name and valid values', () => {
 
 test('templated text fills in values', () => {
   assert.equal(TXT.reward(25, 'Mochi'), '+₱25 · Mochi');
-  assert.match(TXT.result.time(3, 8), /3 sa 8/);
+  assert.match(TXT.result.time(3, 8), /3 of 8/);
   assert.equal(TXT.intro.build(1, 3).length, 2);
-  assert.deepEqual(TXT.card({ kind: 'black', night: 2, where: 'sa bubong ng jeep' }), [
-    'Balahibo: Itim',
-    'Nailigtas: Gabi 2',
-    'Natagpuan sa bubong ng jeep',
+  assert.deepEqual(TXT.card({ kind: 'black', night: 2, where: 'on the jeepney roof' }), [
+    'Fur: Black',
+    'Rescued: Night 2',
+    'Found on the jeepney roof',
   ]);
+});
+
+test('cats saved before the English update still show an English hint', () => {
+  assert.equal(LEGACY_WHERE.length, CAT_SPOTS.length);
+  assert.deepEqual(TXT.card({ kind: 'calico', night: 1, where: 'sa loob ng kahon' }).at(-1), 'Found inside the box');
+});
+
+test('there is no Tagalog left in the in-game text', () => {
+  const all = JSON.stringify(TXT, (k, v) => (typeof v === 'function' ? String(v) : v));
+  for (const word of [' ang ', ' mga ', ' ng ', ' sa ', 'Gabi', 'pusa ', 'Kanlungan']) {
+    assert.ok(!all.includes(word), `found "${word.trim()}" in text.js`);
+  }
 });
