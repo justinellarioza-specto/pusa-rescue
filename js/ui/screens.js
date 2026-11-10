@@ -5,7 +5,7 @@ import { TXT } from '../data/text.js';
 
 export const $ = (id) => document.getElementById(id);
 export const isTouch = 'ontouchstart' in window || (window.matchMedia && matchMedia('(pointer: coarse)').matches);
-export const nav = { backTo: 'menu' }; // where BUMALIK goes from Settings / How to play
+export const nav = { backTo: 'menu' }; // where BACK goes from Settings / How to play
 
 const screens = ['menu', 'modes', 'how', 'settings', 'pause', 'result', 'shelter'];
 export function show(id) {

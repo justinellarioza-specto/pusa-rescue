@@ -1,9 +1,9 @@
 // Pure game rules: no DOM, no three.js, so they can be unit tested with `npm test`.
 
 export const DIFFICULTY = {
-  easy: { label: 'Madali', time: 1.4, hint: -3, stalker: 0.75 },
+  easy: { label: 'Easy', time: 1.4, hint: -3, stalker: 0.75 },
   normal: { label: 'Normal', time: 1, hint: 0, stalker: 1 },
-  hard: { label: 'Mahirap', time: 0.8, hint: 4, stalker: 1.3 },
+  hard: { label: 'Hard', time: 0.8, hint: 4, stalker: 1.3 },
 };
 
 const NO_UPGRADES = { flash: 0, shoes: 0, time: 0, bowls: 0, home: 0 };
